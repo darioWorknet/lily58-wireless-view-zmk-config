@@ -9,6 +9,31 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
+    macros {
+        custom_macro: custom_macro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <180>;
+            tap-ms = <30>;
+            bindings
+                = <&macro_tap &kp N8>
+                , <&macro_tap &kp TAB>
+                , <&macro_tap &kp N1>
+                , <&macro_tap &kp N7>
+                , <&macro_tap &kp TAB>
+                , <&macro_tap &kp TAB>
+                , <&macro_tap &kp DOT>
+                , <&macro_press &kp LSHFT>
+                , <&macro_tap &kp TAB>
+                , <&macro_tap &kp TAB>
+                , <&macro_tap &kp TAB>
+                , <&macro_tap &kp TAB>
+                , <&macro_release &kp LSHFT>
+                , <&macro_tap &kp ENTER>
+                ;
+        };
+    };
+
     behaviors {
         mo_kp: mo_kp {
             compatible = "zmk,behavior-hold-tap";
@@ -57,16 +82,16 @@
             // | BTCLR | BT1 | BT2 |  BT3 |  BT4 |  BT5 |                   |      |       |       |      |       |       |
             // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
             // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
-            // |       |     |     |      |      |      |        |  |       |      |       |       |      |       |       |
+            // |       |     |     |      |      |      |  MACRO |  |       |      |       |       |      |       |       |
             //                     |      |      |      |        |  |       |      |       |       |
 
             display-name = "Lower";
             bindings = <
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                    &trans     &trans     &trans   &trans   &trans   &trans
-&trans      &trans        &trans        &trans        &trans        &trans                          &trans     &trans     &trans   &trans   &trans   &trans
-&trans      &trans        &trans        &trans        &trans        &trans                          &trans     &trans     &trans   &trans   &trans   &trans
-&trans      &trans        &trans        &trans        &trans        &trans        &trans    &trans  &trans     &trans     &trans   &trans   &trans   &trans
-                                        &trans        &trans        &trans        &trans    &trans  &trans     &trans     &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &trans     &trans     &trans   &trans   &trans   &trans
+&trans      &trans        &trans        &trans        &trans        &trans                                &trans     &trans     &trans   &trans   &trans   &trans
+&trans      &trans        &trans        &trans        &trans        &trans                                &trans     &trans     &trans   &trans   &trans   &trans
+&trans      &trans        &trans        &trans        &trans        &trans       &custom_macro    &trans  &trans     &trans     &trans   &trans   &trans   &trans
+                                        &trans        &trans        &trans       &trans           &trans  &trans     &trans     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
