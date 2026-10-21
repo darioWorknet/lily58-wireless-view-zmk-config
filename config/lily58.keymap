@@ -59,6 +59,31 @@
                 , <&macro_tap &kp D &kp N1 &kp SPACE>
                 ;
         };
+
+        // Windows Alt code (needs NumLock on): Alt + numpad 0241 / 0209
+        enye_win_lower: enye_win_lower {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings
+                = <&macro_press &kp LALT>
+                , <&macro_tap &kp KP_N0 &kp KP_N2 &kp KP_N4 &kp KP_N1>
+                , <&macro_release &kp LALT>
+                ;
+        };
+
+        enye_win_upper: enye_win_upper {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings
+                = <&macro_press &kp LALT>
+                , <&macro_tap &kp KP_N0 &kp KP_N2 &kp KP_N0 &kp KP_N9>
+                , <&macro_release &kp LALT>
+                ;
+        };
     };
 
     behaviors {
@@ -87,6 +112,14 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&enye_lower>, <&enye_upper>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        // ñ, or Ñ with Shift held (Windows)
+        enye_win: enye_win {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&enye_win_lower>, <&enye_win_upper>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
     };
@@ -119,7 +152,7 @@
             // | BTCLR | BT1 | BT2 |  BT3 |  BT4 |  BT5 |                   |      |       |       |      |       |       |
             // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
             // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
-            // |       |     |     |      |      |      |  MACRO |  |       |      |       |       |      |       |       |
+            // |       |     |     |      |      |      |  MACRO |  |  ñ    |      |       |       |      |       |       |
             //                     |      |      |      |        |  |       |      |       |       |
 
             display-name = "Lower";
@@ -127,7 +160,7 @@
 &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                          &trans     &trans     &trans   &trans   &trans   &trans
 &trans      &trans        &trans        &trans        &trans        &trans                                &trans     &trans     &trans   &trans   &trans   &trans
 &trans      &trans        &trans        &trans        &trans        &trans                                &trans     &trans     &trans   &trans   &trans   &trans
-&trans      &trans        &trans        &trans        &trans        &trans       &custom_macro    &trans  &trans     &trans     &trans   &trans   &trans   &trans
+&trans      &trans        &trans        &trans        &trans        &trans       &custom_macro    &enye_win  &trans     &trans     &trans   &trans   &trans   &trans
                                         &trans        &trans        &trans       &trans           &trans  &trans     &trans     &trans
             >;
 
