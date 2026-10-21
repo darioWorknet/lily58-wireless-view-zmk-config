@@ -32,14 +32,42 @@
                 , <&macro_tap &kp ENTER>
                 ;
         };
+
+        // Unicode input (Linux GTK/IBus): Ctrl+Shift+U, hex code, Space
+        enye_lower: enye_lower {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp F &kp N1 &kp SPACE>
+                ;
+        };
+
+        enye_upper: enye_upper {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp D &kp N1 &kp SPACE>
+                ;
+        };
     };
 
     behaviors {
         mo_kp: mo_kp {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <280>;
             quick-tap-ms = <100>;
+            require-prior-idle-ms = <250>;
             flavor = "hold-preferred";
             bindings = <&mo>, <&kp>;
         };
@@ -47,10 +75,19 @@
         kp_kp: kp_kp {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <280>;
             quick-tap-ms = <100>;
+            require-prior-idle-ms = <250>;
             flavor = "hold-preferred";
             bindings = <&kp>, <&kp>;
+        };
+
+        // ñ, or Ñ with Shift held
+        enye: enye {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&enye_lower>, <&enye_upper>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
         };
     };
 
@@ -102,7 +139,7 @@
             // |  F12  | F1  | F2  | F3   | F4   |  F5  |                   |  F6   |   F7   |  F8    |   F9  |  F10  |  F11  |
             // | CAPS  |  ~  |  7  |  8   |  9   |      |                   |       |        |        |       |  "|"  |       |
             // |       |  `  |  4  |  5   |  6   |      |                   |  <-   |   v    |   ^    |   ->  |   \   |       |
-            // |       |  0  |  1  |  2   |  3   |      |        |  |       | HOME  |  PGDN  |  PGUP  |  END  |       |       |
+            // |       |  0  |  1  |  2   |  3   |      |        |  |  ñ    | HOME  |  PGDN  |  PGUP  |  END  |       |       |
             //                     |      |      |      |        |  |       |       |        |        |
 
             display-name = "Raise";
@@ -110,7 +147,7 @@
 &kp F12    &kp F1     &kp F2  &kp F3   &kp F4   &kp F5                     &kp F6     &kp F7     &kp F8     &kp F9     &kp F10        &kp F11
 &kp CAPS   &kp TILDE  &kp N7  &kp N8   &kp N9   &trans                     &trans     &trans     &trans     &trans     &kp PIPE       &trans
 &trans     &kp GRAVE  &kp N4  &kp N5   &kp N6   &trans                     &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &kp BACKSLASH  &trans
-&trans     &kp N0     &kp N1  &kp N2   &kp N3   &trans   &trans    &trans  &kp HOME   &kp PG_DN  &kp PG_UP  &kp END    &trans         &trans
+&trans     &kp N0     &kp N1  &kp N2   &kp N3   &trans   &trans    &enye   &kp HOME   &kp PG_DN  &kp PG_UP  &kp END    &trans         &trans
                               &trans   &trans   &trans   &trans    &trans  &trans     &trans     &trans
             >;
 
