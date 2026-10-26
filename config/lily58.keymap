@@ -72,6 +72,16 @@
             bindings = <&mo>, <&kp>;
         };
 
+        // Space and Enter: tap unless another key is tapped while held
+        mo_kp_bal: mo_kp_bal {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <100>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+        };
+
         kp_kp: kp_kp {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -108,7 +118,7 @@
 &kp TAB    &kp Q   &kp W   &kp E     &kp R     &kp T                                              &kp Y              &kp U     &kp I      &kp O    &kp P     &kp MINUS
 &mo 1      &kp A   &kp S   &kp D     &kp F     &kp G                                              &kp H              &kp J     &kp K      &kp L    &kp SEMI  &mo_kp 1 SQT
 &kp LSHFT  &kp Z   &kp X   &kp C     &kp V     &kp B             &kp LBKT         &kp RBKT        &kp N              &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
-                           &kp LGUI  &kp LALT  &kp_kp LCTRL DEL  &mo_kp 2 SPACE   &mo_kp 2 RET    &kp_kp RCTRL BSPC  &kp RALT  &kp RGUI
+                           &kp LGUI  &kp LALT  &kp_kp LCTRL DEL  &mo_kp_bal 2 SPACE  &mo_kp_bal 2 RET  &kp_kp RCTRL BSPC  &kp RALT  &kp RGUI
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
